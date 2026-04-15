@@ -42,7 +42,7 @@ export default function AdminPage() {
       setUser(data.user)
       // Check admin role
       const { data: profile } = await supabase
-        .from('ai_profiles')
+        .from('app_insight_profiles')
         .select('role')
         .eq('id', data.user.id)
         .single()
@@ -58,8 +58,8 @@ export default function AdminPage() {
 
   async function loadAdminData(supabase: ReturnType<typeof createClient>) {
     const [statsRes, waitlistRes] = await Promise.all([
-      supabase.from('ai_daily_stats').select('*').order('stat_date', { ascending: false }).limit(30),
-      supabase.from('ai_waitlist').select('*').order('created_at', { ascending: false }).limit(50),
+      supabase.from('app_insight_daily_stats').select('*').order('stat_date', { ascending: false }).limit(30),
+      supabase.from('app_insight_waitlist').select('*').order('created_at', { ascending: false }).limit(50),
     ])
     if (statsRes.data) setStats(statsRes.data)
     if (waitlistRes.data) setWaitlist(waitlistRes.data)
@@ -190,7 +190,7 @@ export default function AdminPage() {
 
             {stats.length === 0 && (
               <div className="bg-white p-12 rounded-xl border border-slate-200 text-center text-slate-400">
-                暂无统计数据。请先运行 <code className="text-xs bg-slate-100 px-1 rounded">ai_aggregate_daily_stats()</code> 或等待自动聚合。
+                暂无统计数据。请先运行 <code className="text-xs bg-slate-100 px-1 rounded">app_insight_aggregate_daily_stats()</code> 或等待自动聚合。
               </div>
             )}
 
