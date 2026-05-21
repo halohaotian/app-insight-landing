@@ -40,13 +40,9 @@ export default function AdminPage() {
         return
       }
       setUser(data.user)
-      // Check admin role
-      const { data: profile } = await supabase
-        .from('app_insight_profiles')
-        .select('role')
-        .eq('id', data.user.id)
-        .single()
-      if (profile?.role === 'admin') {
+      // Check admin role via app_metadata
+      const isAdminUser = data.user.app_metadata?.role === 'admin'
+      if (isAdminUser) {
         setIsAdmin(true)
         loadAdminData(supabase)
       } else {

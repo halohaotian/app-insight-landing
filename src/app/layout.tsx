@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { I18nProvider } from "@/lib/i18n/context";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -9,8 +10,17 @@ const geistSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "AppInsight - AI 驱动的 APP 评论需求挖掘平台",
-  description: "从海量用户评论中提取真实需求，用 AI 帮你发现用户真正想要什么",
+  title: "AppInsight - AI-Powered App Review Analysis & Requirement Mining",
+  description: "Discover real user needs from app store reviews using AI. Extract pain points, cluster requirements, and prioritize features automatically.",
+  metadataBase: new URL("https://appinsight.site"),
+  alternates: { canonical: "https://appinsight.site" },
+  openGraph: {
+    title: "AppInsight - AI-Powered App Review Analysis & Requirement Mining",
+    description: "Discover real user needs from app store reviews using AI.",
+    url: "https://appinsight.site",
+    siteName: "AppInsight",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -19,9 +29,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN">
+    <html lang="en">
       <body className={`${geistSans.variable} font-[family-name:var(--font-geist-sans)] antialiased`}>
-        {children}
+        <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
   );
